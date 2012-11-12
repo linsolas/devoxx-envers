@@ -32,7 +32,6 @@ public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    // , generator = "S_PERSON")
     private int id;
 
     private String name;
