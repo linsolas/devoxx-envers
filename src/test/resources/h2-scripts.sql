@@ -3,6 +3,7 @@ create sequence HIBERNATE_SEQUENCE start with 1 increment by 1;
 create table T_PERSON (
     ID number(10) not null,
     NAME varchar2(64) not null,
+    SURNAME varchar2(64),
     COMMENTS varchar2(128),
     constraint PK_PERSON primary key (ID)
 );
@@ -10,9 +11,9 @@ create table T_PERSON (
 create table T_PERSON_AUD (
     ID number(10) not null,
     NAME varchar2(64),
-    COMMENTS varchar2(128),
+    SURNAME varchar2(64),
     NAME_MOD number(1),
-    COMMENTS_MOD number(1),
+    SURNAME_MOD number(1),
     REV number(10) not null,
     REVTYPE number(1),
     constraint PK_PERSON_AUD primary key (ID, REV)
