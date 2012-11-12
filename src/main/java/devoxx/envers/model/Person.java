@@ -33,7 +33,7 @@ public class Person {
     @Column(name = "NAME")
     private String name;
 
-    //@NotAudited
+    @NotAudited
     @Column(name = "COMMENTS")
     private String comments;
 
