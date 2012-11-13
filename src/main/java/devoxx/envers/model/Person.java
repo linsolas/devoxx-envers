@@ -1,6 +1,5 @@
 package devoxx.envers.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,15 +25,20 @@ public class Person {
         this.name = name;
     }
 
+    public Person(String name, String surname) {
+        this.name = name;
+        this.surname = surname;
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)//, generator = "S_PERSON")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
-    @Column(name = "NAME")
     private String name;
 
-    //@NotAudited
-    @Column(name = "COMMENTS")
+    private String surname;
+
+    @NotAudited
     private String comments;
 
     public int getId() {
@@ -51,6 +55,14 @@ public class Person {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getComments() {

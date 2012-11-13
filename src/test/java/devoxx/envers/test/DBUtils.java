@@ -1,9 +1,5 @@
 package devoxx.envers.test;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.sql.DataSource;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Connection;
@@ -14,6 +10,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.sql.DataSource;
 
 import org.apache.commons.lang.StringUtils;
 import org.h2.jdbcx.JdbcDataSource;
@@ -78,7 +79,7 @@ public class DBUtils {
             ps = getConnection().prepareStatement("select * from " + tableName);
             set = ps.executeQuery();
             ResultSetMetaData meta = set.getMetaData();
-            content.append(displayHeader(meta));
+            content.append(displayHeader(tableName, meta));
             while (set.next()) {
                 int col = 1;
                 content.append("\t|").append(StringUtils.center(String.valueOf(++count), 4));
@@ -100,9 +101,10 @@ public class DBUtils {
         System.out.print(content);
     }
 
-    private static String displayHeader(ResultSetMetaData meta) throws SQLException {
-        int nbCols = meta.getColumnCount();
+    private static String displayHeader(String tableName, ResultSetMetaData meta) throws SQLException {
         StringBuffer sb = new StringBuffer();
+        sb.append("\t  +").append(StringUtils.repeat("-", tableName.length() + 2)).append("+\n\t  | ").append(tableName).append(" |\n");
+        int nbCols = meta.getColumnCount();
         sb.append(addLine(meta));
         sb.append("\t|    |");
         for (int i = 1; i <= nbCols; i++) {

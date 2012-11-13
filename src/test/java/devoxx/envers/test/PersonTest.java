@@ -1,18 +1,17 @@
 package devoxx.envers.test;
 
-import javax.persistence.EntityManager;
 import java.sql.SQLException;
 import java.util.List;
 
-import devoxx.envers.model.Person;
+import javax.persistence.EntityManager;
+
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.query.AuditQuery;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import sun.rmi.transport.ObjectTable;
 
-import static org.fest.assertions.Assertions.assertThat;
+import devoxx.envers.model.Person;
 
 /**
  * User: Romain Linsolas
@@ -32,12 +31,12 @@ public class PersonTest {
         DBUtils.displayDBContent();
         Person me = new Person("Romain");
         save(me);
-        Person chuck = new Person("Chuck Norris");
+        Person chuck = new Person("Chuck", "Norris");
         chuck.setComments("The man");
         save(chuck);
         DBUtils.displayDBContent();
-     
-        me.setName("Romain Linsolas");
+
+        me.setSurname("Linsolas");
         save(me);
         DBUtils.displayDBContent();
 
@@ -50,7 +49,6 @@ public class PersonTest {
 
         AuditReader reader = AuditReaderFactory.get(entityManager);
 
-
         List<Number> revisions = reader.getRevisions(Person.class, me.getId());
         for (Number n : revisions) {
             Person p = reader.find(Person.class, me.getId(), n);
@@ -58,7 +56,7 @@ public class PersonTest {
         }
 
         AuditQuery query = reader.createQuery().forRevisionsOfEntity(Person.class, false, true);
-        //query.add(AuditEntity.property("name").like("Romain%"));
+        // query.add(AuditEntity.property("name").like("Romain%"));
         List<Object> list = query.getResultList();
         for (Object o : list) {
             Object[] array = (Object[]) o;
@@ -67,7 +65,7 @@ public class PersonTest {
             }
             System.out.println("");
         }
-        
+
     }
 
     private void save(Object o) {
