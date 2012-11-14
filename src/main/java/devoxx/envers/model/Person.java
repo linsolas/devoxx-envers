@@ -75,7 +75,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person { id=" + id + ", name='" + name + "', comments='" + StringUtils.trimToEmpty(comments) + "'}";
+        return "Person { id=" + id + ", name='" + name + "', surname='" + StringUtils.trimToEmpty(surname) + "', comments='" + StringUtils.trimToEmpty(comments) + "'}";
     }
 
 }
