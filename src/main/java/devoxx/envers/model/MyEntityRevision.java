@@ -53,4 +53,14 @@ public class MyEntityRevision implements Serializable {
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
+
+    @Override
+    public String toString() {
+        return "MyEntityRevision{" +
+                "id=" + id +
+                ", timestamp=" + timestamp +
+                ", username='" + username + '\'' +
+                '}';
+    }
+
 }
