@@ -20,6 +20,7 @@ import org.apache.commons.lang.StringUtils;
 import org.h2.jdbcx.JdbcDataSource;
 import org.h2.tools.RunScript;
 import org.h2.tools.Server;
+import org.hibernate.envers.RevisionType;
 
 /**
  * User: Romain Linsolas Date: 06/11/12
@@ -87,6 +88,8 @@ public class DBUtils {
                     String val = StringUtils.trimToEmpty(set.getString(col));
                     if ("REVTSTMP".equals(meta.getColumnName(col))) {
                         val = sdf.format(new Date(Long.parseLong(val)));
+                    } else if ("REVTYPE".equals(meta.getColumnName(col))) {
+                        val = RevisionType.fromRepresentation(Byte.parseByte(val)).name();
                     }
                     col++;
                     String str = StringUtils.center(StringUtils.abbreviate(val, CELL_WIDTH), CELL_WIDTH);
