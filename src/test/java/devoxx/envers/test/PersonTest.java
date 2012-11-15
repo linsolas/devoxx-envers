@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
+import org.hibernate.envers.query.AuditEntity;
 import org.hibernate.envers.query.AuditQuery;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -57,15 +58,18 @@ public class PersonTest {
 
         AuditQuery query = reader.createQuery().forRevisionsOfEntity(Person.class, false, true);
         // query.add(AuditEntity.property("name").like("Romain%"));
-        List<Object> list = query.getResultList();
-        for (Object o : list) {
-            Object[] array = (Object[]) o;
+        List<Object[]> list = query.getResultList();
+        for (Object[] array : list) {
             for (Object x : array) {
                 System.out.print(x + " | ");
             }
             System.out.println("");
         }
 
+        List<Person> persons = reader.createQuery().forEntitiesAtRevision(Person.class, 3).getResultList();
+        for (Person p : persons) {
+            System.out.println("--> " + p);
+        }
     }
 
     private void save(Object o) {
